@@ -7,12 +7,18 @@ def add_book():
             'BookName', 'AuthorName', 'SharedWith', 'IsRed'
         ])
         writer.writerow({'BookName': book_name,
-                         'AuthorName': book_author})
+                         'AuthorName': book_author,
+                         'SharedWith': 'None',
+                         'IsRed': False})
     print('Book was added successfully')
 
 
 def list_book():
-    print('List a book option')
+    import csv
+    with open('BooksDB.csv', mode='r')as file:
+        rows = csv.DictReader(file,fieldnames=('BookName', 'AuthorName', 'SharedWith', 'IsRed'))  # prelucram datele din DB in randuri
+        for row in rows:
+            print(f"Book name is: {row.get('BookName')},written by {row.get('AuthorName')}, shared with {row.get('SharedWith')}, red {row.get('IsRed')}")
 
 
 def update_book():
