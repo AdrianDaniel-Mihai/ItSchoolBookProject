@@ -50,7 +50,27 @@ def update_book():
 
 
 def share_book():
-    print('Share a book option')
+    title = input("What book are you looking for today? --> ")
+    list_of_books = []
+    shared_with = "None"
+    import csv
+    with open("BooksDB.csv", mode="r") as file:
+        list_of_books = csv.DictReader(file, fieldnames=["BookTitle", "BookAuthor", "SharedWith", "IsRead"])
+        for book in list_of_books:
+            if book.get("BookTitle") != title:
+                add = input('''This book is not in our list.
+    Would you like to add this book? Y/N --> ''')
+                if add == "Y":
+                    add_book()
+                else:
+                    print("Good bye!")
+            else:
+                shared_with = input(f"Who would you like to share {title} with? --> ")
+                with open("BooksDB.csv", mode="w") as file:
+                    writer = csv.DictWriter(file, fieldnames=["BookTitle", "BookAuthor", "SharedWith", "IsRed"])
+                    writer.writerow({"BookTitle": book.get("BookTitle"), "BookAuthor": book.get("BookAuthor"),
+                                     "SharedWith": shared_with, "IsRed": book.get("IsRed")})
+                print(f"{title} is now shared with {shared_with}")
 
 
 #  Main menu for user
