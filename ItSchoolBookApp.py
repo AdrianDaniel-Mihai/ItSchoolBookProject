@@ -16,13 +16,37 @@ def add_book():
 def list_book():
     import csv
     with open('BooksDB.csv', mode='r')as file:
-        rows = csv.DictReader(file,fieldnames=('BookName', 'AuthorName', 'SharedWith', 'IsRed'))  # prelucram datele din DB in randuri
+        rows = csv.DictReader(file, fieldnames=('BookName', 'AuthorName', 'SharedWith', 'IsRed'))  # prelucram datele din DB in randuri
         for row in rows:
             print(f"Book name is: {row.get('BookName')},written by {row.get('AuthorName')}, shared with {row.get('SharedWith')}, red {row.get('IsRed')}")
 
 
 def update_book():
-    print('Update a book option')
+    book_name = input('Enter book name:')
+    book_red = input('Have you red the book?(Y/N)')
+    if book_red == 'Y':
+        book_red = True
+    else:
+        book_red = False
+    import csv
+    rows = []
+    with open('BooksDB.csv', mode='r') as file:
+        rows = list(csv.DictReader(file, fieldnames=['BookName', 'AuthorName', 'SharedWith', 'IsRed']))
+        for row in rows:
+            if row.get('BookName') == book_name:
+                row['IsRed'] = book_red
+                break
+    with open('BooksDB.csv', mode='w') as file:
+        csv_writer = csv.DictWriter(file, fieldnames=[
+            'BookName', 'AuthorName', 'SharedWith', 'IsRed'
+        ])
+        csv_writer.writerow({'BookName': row.get('book_name'),
+                         'AuthorName': row.get('book_author'),
+                         'SharedWith': row.get('SharedWith'),
+                         'IsRed': book_red})
+        print('Book was updated successfully')
+
+
 
 
 def share_book():
