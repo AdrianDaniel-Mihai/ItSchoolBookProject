@@ -30,16 +30,20 @@ def update_book():
         book_red = False
     import csv
     rows = []
-    with open('BooksDB.csv', mode='a') as file:
-        rows = list(csv.DictReader(file))
+    with open('BooksDB.csv', mode='r') as file:
+        rows = list(csv.DictReader(file, fieldnames=['BookName', 'AuthorName', 'SharedWith', 'IsRed']))
         for row in rows:
             if row.get('BookName') == book_name:
                 row['IsRed'] = book_red
-                csv_writer = csv.DictWriter(file, fieldnames=[
+                break
+    with open('BooksDB.csv', mode='w') as file:
+        csv_writer = csv.DictWriter(file, fieldnames=[
             'BookName', 'AuthorName', 'SharedWith', 'IsRed'
         ])
-                csv_writer.writerow(row)
-                break
+        csv_writer.writerow({'BookName': row.get('book_name'),
+                         'AuthorName': row.get('book_author'),
+                         'SharedWith': row.get('SharedWith'),
+                         'IsRed': book_red})
         print('Book was updated successfully')
 
 
