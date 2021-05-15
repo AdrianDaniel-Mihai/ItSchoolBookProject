@@ -80,15 +80,20 @@ print('1 : Add a book')
 print('2 : List books')
 print('3 : Update books')
 print('4 : Share books')
-user_option = int(input('Choose an option -> '))
+print('5 : Exit')
 
-if user_option == 1:
-    add_book()
-elif user_option == 2:
-    list_book()
-elif user_option == 3:
-    update_book()
-elif user_option == 4:
-    share_book()
-else:
-    print('Invalid option.')
+user_option = 0
+while user_option != 5:
+    user_option = int(input('Choose an option -> '))
+    if user_option == 1:
+        add_book()
+    elif user_option == 2:
+        list_book()
+    elif user_option == 3:
+        update_book()
+    elif user_option == 4:
+        share_book()
+    elif user_option == 5:
+        break
+    else:
+        print('Invalid option.')
